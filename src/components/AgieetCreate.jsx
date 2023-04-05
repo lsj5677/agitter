@@ -55,7 +55,7 @@ export default function AgieetCreate() {
             <AiOutlinePlus />
           </button>
         </div>
-        <label for="attach-file" className={styles.label}>
+        <label htmlFor="attach-file" className={styles.label}>
           <span>Add photos</span>
           <AiOutlinePlus />
         </label>
