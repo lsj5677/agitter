@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAgieet } from "../api/firebase";
 import { useAuthContext } from "../context/AuthContext";
+import styles from "./Profile.module.css";
 
 export default function Profile() {
   const { user, updateUserProfile, signOutForUser } = useAuthContext();
@@ -42,11 +43,14 @@ export default function Profile() {
           placeholder="Display name"
           value={newDisplayName || ""}
           onChange={onChange}
+          className={styles.input}
         />
-        <button>Update Profile</button>
+        <button className={styles.button}>Update Profile</button>
       </form>
-      <div>
-        <button onClick={handleLogout}>Logout</button>
+      <div className={styles.logoutBox}>
+        <button onClick={handleLogout} className={styles.logout}>
+          Logout
+        </button>
         {isLoading && "Loading..."}
       </div>
     </>

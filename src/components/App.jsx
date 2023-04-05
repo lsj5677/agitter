@@ -1,15 +1,20 @@
 import AppRouter from "./AppRouter";
 import { AuthContextProvider } from "../context/AuthContext";
 import { Outlet } from "react-router-dom";
+import styles from "./App.module.css";
 
 function App() {
   return (
     <AuthContextProvider>
-      <AppRouter />
-      <main>
-        <Outlet />
-      </main>
-      <footer>@copy {new Date().getFullYear()} Agitter</footer>
+      <div className={styles.wrap}>
+        <main className={styles.main}>
+          <AppRouter />
+          <Outlet />
+        </main>
+        <footer className={styles.footer}>
+          @copy {new Date().getFullYear()} Agitter
+        </footer>
+      </div>
     </AuthContextProvider>
   );
 }

@@ -1,0 +1,53 @@
+.agieet {
+  position: relative;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border-radius: 10px;
+  padding: 1em;
+  margin-bottom: 1em;
+  font-weight: 300;
+}
+
+.buttonGroup {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+
+.buttonGroup button {
+  background: none;
+}
+
+.buttonGroup button:last-child {
+  margin-left: 0.5em;
+}
+
+.edit {
+  background-color: var(--color-white);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  border: 1px solid #999;
+  border-radius: 30px;
+  padding: 0.5em 1em;
+}
+
+.update {
+  display: block;
+  width: 100%;
+  background-color: var(--color-accent);
+  color: #fff;
+  border-radius: 30px;
+  padding: 0.5em;
+  margin: 1em 0 0.5em;
+}
+.cancel {
+  display: block;
+  width: 100%;
+  background-color: #f53a3a;
+  color: #fff;
+  border-radius: 30px;
+  padding: 0.5em;
+}

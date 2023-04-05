@@ -1,0 +1,64 @@
+.inputBox {
+  position: relative;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--color-accent);
+  padding: 1em;
+  border-radius: 30px;
+  color: var(--color-white);
+}
+
+.button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.8em;
+  border-radius: 50%;
+  font-size: 1.3em;
+  background-color: var(--color-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+.label span {
+  margin-right: 0.3em;
+}
+
+.inputFile {
+  opacity: 0;
+}
+
+.attachImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.attachImg img {
+  width: 80px;
+  height: 80px;
+}
+
+.attachImg button {
+  background: none;
+}
+
+.attachImg button svg {
+  color: var(--color-white);
+  font-size: var(--text-sm);
+}

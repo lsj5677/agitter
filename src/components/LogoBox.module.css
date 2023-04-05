@@ -1,0 +1,9 @@
+.logo {
+  font-family: var(--font-marcellus);
+  font-size: var(--text-sm);
+  letter-spacing: 0.2em;
+}
+
+.logo > svg {
+  font-size: var(--text-md);
+}

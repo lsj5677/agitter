@@ -1,0 +1,28 @@
+.nav {
+  margin: 2em 0;
+}
+
+.nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 3em;
+}
+
+.nav ul li {
+  list-style: none;
+}
+
+.nav ul li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav ul li svg {
+  font-size: var(--text-md);
+}
+
+.nav ul li span {
+  font-family: var(--font-marcellus);
+  font-size: 0.8em;
+}

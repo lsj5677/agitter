@@ -1,0 +1,32 @@
+.button {
+  display: block;
+  width: 100%;
+  background-color: var(--color-accent);
+  color: #fff;
+  border-radius: 30px;
+  padding: 0.5em;
+  margin: 1em 0 0.5em;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  color: var(--color-white);
+  text-align: center;
+  margin-top: 1em;
+}
+
+.logoutBox {
+  margin-top: 1em;
+  border-top: 1px dashed var(--color-white);
+}
+
+.logout {
+  display: block;
+  width: 100%;
+  background-color: #f53a3a;
+  color: #fff;
+  border-radius: 30px;
+  padding: 0.5em;
+  margin-top: 1em;
+}

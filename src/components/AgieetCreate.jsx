@@ -1,6 +1,9 @@
 import { useState, useRef } from "react";
 import { addAgieet } from "../api/firebase";
 import { useAuthContext } from "../context/AuthContext";
+import styles from "./AgieetCreate.module.css";
+import { AiOutlinePlus } from "react-icons/ai";
+import { ImCancelCircle } from "react-icons/im";
 
 export default function AgieetCreate() {
   const { user } = useAuthContext();
@@ -37,26 +40,39 @@ export default function AgieetCreate() {
     fileInput.current.value = null;
   };
   return (
-    <div>
+    <div className={styles.agieetCreate}>
       <form onSubmit={onSubmit}>
+        <div className={styles.inputBox}>
+          <input
+            type="text"
+            placeholder="what's on your mind?"
+            maxLength={120}
+            value={agieet}
+            onChange={(e) => setAgieet(e.target.value)}
+            className={styles.input}
+          />
+          <button className={styles.button}>
+            <AiOutlinePlus />
+          </button>
+        </div>
+        <label for="attach-file" className={styles.label}>
+          <span>Add photos</span>
+          <AiOutlinePlus />
+        </label>
         <input
-          type="text"
-          placeholder="what's on your mind?"
-          maxLength={120}
-          value={agieet}
-          onChange={(e) => setAgieet(e.target.value)}
-        />
-        <input
+          id="attach-file"
           type="file"
           accept="image/*"
           onChange={onFileChange}
           ref={fileInput}
+          className={styles.inputFile}
         />
-        <button>Agieet</button>
         {imageFile && (
-          <div>
-            <img src={imageFile} alt={agieet.text} width="50px" height="50px" />
-            <button onClick={handleClearPhoto}>Clear Photo</button>
+          <div className={styles.attachImg}>
+            <img src={imageFile} alt={agieet.text} />
+            <button onClick={handleClearPhoto}>
+              <ImCancelCircle />
+            </button>
           </div>
         )}
       </form>

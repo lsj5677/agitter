@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { signInWithEmail, signUpWithEmail } from "../api/firebase";
+import styles from "./Form.module.css";
 
 export default function Form({ buttonValue, newAccount }) {
   const [email, setEmail] = useState();
@@ -28,7 +29,7 @@ export default function Form({ buttonValue, newAccount }) {
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={styles.form}>
         <input
           type="email"
           name="email"
@@ -36,6 +37,7 @@ export default function Form({ buttonValue, newAccount }) {
           value={email || ""}
           onChange={onChange}
           required
+          className={styles.input}
         />
         <input
           type="password"
@@ -44,8 +46,9 @@ export default function Form({ buttonValue, newAccount }) {
           value={password || ""}
           onChange={onChange}
           required
+          className={styles.input}
         />
-        <button>{buttonValue}</button>
+        <button className={styles.button}>{buttonValue}</button>
       </form>
     </div>
   );

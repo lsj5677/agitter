@@ -1,0 +1,20 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  background-color: var(--color-white);
+  border-radius: 30px;
+  padding: 1em;
+  width: 100%;
+}
+
+.signUpText {
+  margin-top: 1em;
+}
+
+.signUpText > a {
+  display: inline-block;
+  margin-left: 1em;
+  text-decoration: underline;
+}
