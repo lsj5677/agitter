@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Form from "../components/Form";
-import { signInWithEmail, signInWithGoogle } from "../api/firebase";
+import { signInWithGoogle } from "../api/firebase";
+import styles from "./SignIn.module.css";
+// import { IconName } from "react-icons/vsc";
 
 export default function SignIn() {
   const handleGoogle = () => signInWithGoogle();
   return (
-    <div>
+    <div className={styles.signInWrap}>
+      <h2>Agieet</h2>
       <Form buttonValue="Sign In" newAccount={false} />
       <div>
         <button onClick={handleGoogle}>Start with Google</button>

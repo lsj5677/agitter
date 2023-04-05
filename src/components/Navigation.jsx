@@ -1,13 +1,9 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { signOutForUser } from "../api/firebase";
+import { Link } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Navigation() {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    signOutForUser();
-    navigate("/");
-  };
+  const { user } = useAuthContext();
   return (
     <nav>
       <ul>
@@ -15,10 +11,9 @@ export default function Navigation() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link to="/profile">{user.displayName}'s Profile</Link>
         </li>
       </ul>
-      <button onClick={handleLogout}>Logout</button>
     </nav>
   );
 }

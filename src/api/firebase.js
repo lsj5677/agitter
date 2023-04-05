@@ -10,14 +10,21 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
+import {
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadString,
+} from "firebase/storage";
 
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   getAuth,
-  signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
@@ -34,9 +41,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 export const db = getFirestore(app);
+const storage = getStorage(app);
 
 export function signUpWithEmail(email, password) {
   createUserWithEmailAndPassword(auth, email, password).catch((error) => {
@@ -56,34 +64,57 @@ export function signInWithGoogle() {
   });
 }
 
-export function signOutForUser() {
-  if (window.confirm("Are you sure you want to Logout?")) {
-    signOut(auth)
-      .then(() => {
-        alert("Sign-out successful");
-      })
-      .catch((error) => {
-        console.log(`${error.code} : ${error.massage}`);
-      });
-  }
-}
-
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth, async (user) => {
-    const setUser = await callback(user);
+    if (user) {
+      if (user.displayName === null) {
+        const name = user.email.split("@")[0];
+        user.displayName = name;
+      }
+    }
+    callback(user);
   });
 }
 
-export async function addAgieet(agieet, userId) {
+export function getAgieets(callback) {
+  const q = query(collection(db, "agieets"), orderBy("createdAt", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    const agieetArray = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    callback(agieetArray);
+  });
+}
+
+export async function getAgieet(userId) {
+  const q = query(
+    collection(db, "agieets"),
+    where("creatorId", "==", userId),
+    orderBy("createdAt", "desc")
+  );
+  const snapShotQuery = await getDocs(q);
+  return snapShotQuery.forEach((doc) => {
+    // console.log(doc.id, "=>", doc.data());
+  });
+}
+
+export async function addAgieet(agieet, userId, imageFile) {
+  let resPhotoUrl = "";
+  const storageRef = ref(storage, `${userId}/${uuid()}`);
+
+  if (imageFile !== "") {
+    const resPhoto = await uploadString(storageRef, imageFile, "data_url");
+    resPhotoUrl = await getDownloadURL(resPhoto.ref);
+  }
+
   return addDoc(collection(db, "agieets"), {
     text: agieet,
     createdAt: Date.now(),
     creatorId: userId,
+    resPhotoUrl,
   });
-}
-
-export async function deleteAgieet(userId) {
-  return deleteDoc(doc(db, "agieets", userId));
 }
 
 export async function updateAgieet(userId, newAgieet) {
@@ -92,32 +123,9 @@ export async function updateAgieet(userId, newAgieet) {
   });
 }
 
-export async function get() {
-  const docSnap = await getDocs(collection(db, "agieets"));
-  let res = [];
-  docSnap.forEach((doc) => {
-    res.push({
-      id: doc.id,
-      ...doc.data(),
-    });
-  });
-  console.log("res >>>>>>>>>", res);
-  return res;
-}
-
-export function getAgieetData() {
-  // const q = query(collection(db, "agieets"), orderBy("createdAt", "desc"));
-
-  const q = collection(db, "agieets");
-  onSnapshot(q, (snapshot) => {
-    const agieetArray = [];
-    snapshot.forEach((doc) => {
-      agieetArray.push({
-        id: doc.id,
-        ...doc.data(),
-      });
-    });
-    console.log("agieetArray >>>>>>>>>", agieetArray);
-    return agieetArray;
-  });
+export async function deleteAgieet(userId, resPhotoUrl) {
+  const delAgieet = await deleteDoc(doc(db, "agieets", userId));
+  if (resPhotoUrl) {
+    const delImage = await deleteObject(ref(storage, resPhotoUrl));
+  }
 }

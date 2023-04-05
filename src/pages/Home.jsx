@@ -1,28 +1,21 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { addAgieet, db, get, getAgieetData } from "../api/firebase";
+import { db } from "../api/firebase";
 import Agieet from "../components/Agieet";
+import AgieetCreate from "../components/AgieetCreate";
 import { useAuthContext } from "../context/AuthContext";
+import styles from "./Home.module.css";
 
 export default function Home() {
-  const [agieet, setAgieet] = useState("");
   const [agieets, setAgieets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   const { user } = useAuthContext();
+
   const q = query(collection(db, "agieets"), orderBy("createdAt", "desc"));
 
-  // const fetchData = async () => {
-  //   setIsLoading(true);
-  //   const res = await getAgieetData();
-  //   console.log("rrrrrr", res);
-  //   setAgieets([...res]);
-  //   setIsLoading(false);
-  // };
-
-  const fetchData = () => {
-    setIsLoading(true);
+  useEffect(() => {
     onSnapshot(q, (snapshot) => {
+      setIsLoading(true);
       const agieetArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -30,31 +23,12 @@ export default function Home() {
       setAgieets(agieetArray);
       setIsLoading(false);
     });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    addAgieet(agieet, user.uid);
-    setAgieet("");
-  };
+  }, [q]);
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="what's on your mind?"
-          maxLength={120}
-          value={agieet}
-          onChange={(e) => setAgieet(e.target.value)}
-        />
-        <button>Agieet</button>
-      </form>
-      <div>
+    <>
+      <AgieetCreate />
+      <div className={styles.agieetWrap}>
         {isLoading && "Loading..."}
         {agieets.map((agieet) => (
           <Agieet
@@ -64,6 +38,6 @@ export default function Home() {
           />
         ))}
       </div>
-    </div>
+    </>
   );
 }

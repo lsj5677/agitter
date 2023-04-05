@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import SignIn from "../pages/SignIn";
 import Home from "../pages/Home";

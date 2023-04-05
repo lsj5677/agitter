@@ -2,11 +2,11 @@ import { useState } from "react";
 import { deleteAgieet, updateAgieet } from "../api/firebase";
 
 export default function Agieet({ agieet, isOwner }) {
+  const { id, text, resPhotoUrl } = agieet;
   const [edit, setEdit] = useState(false);
   const [newAgieet, setNewAgieet] = useState();
 
   const toggleEdit = () => setEdit((prev) => !prev);
-  const handleEdit = () => {};
   const onChange = (e) => {
     const {
       target: { value },
@@ -23,7 +23,7 @@ export default function Agieet({ agieet, isOwner }) {
       "Are you sure you want to delete this agieet?"
     );
     if (confirmOk) {
-      deleteAgieet(agieet.id);
+      deleteAgieet(id, resPhotoUrl);
     }
   };
   return (
@@ -44,7 +44,10 @@ export default function Agieet({ agieet, isOwner }) {
         </>
       ) : (
         <div>
-          <h4>{agieet.text}</h4>
+          <h4>{text}</h4>
+          {resPhotoUrl && (
+            <img src={resPhotoUrl} width="50px" height="50px" alt={text} />
+          )}
           {isOwner && (
             <>
               <button onClick={handleDelete}>Delete</button>
