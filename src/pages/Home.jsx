@@ -4,7 +4,6 @@ import { db } from "../api/firebase";
 import Agieet from "../components/Agieet";
 import AgieetCreate from "../components/AgieetCreate";
 import { useAuthContext } from "../context/AuthContext";
-import styles from "./Home.module.css";
 
 export default function Home() {
   const [agieets, setAgieets] = useState([]);
@@ -28,7 +27,7 @@ export default function Home() {
   return (
     <>
       <AgieetCreate />
-      <div className={styles.agieetWrap}>
+      <div>
         {isLoading && "Loading..."}
         {agieets.map((agieet) => (
           <Agieet
